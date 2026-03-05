@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Admin Dashboard</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-light bg-light">
+      <div class="container-fluid">
+        <span class="navbar-brand">Admin Dashboard</span>
+        <div>
+          <a class="btn btn-outline-secondary btn-sm" href="/logout">Logout</a>
+        </div>
+      </div>
+    </nav>
+    <div class="container py-4">
+      <div class="mb-3">
+        <a class="btn btn-sm btn-outline-primary" href="/analytics">📊 View Analytics</a>
+        <a class="btn btn-sm btn-outline-primary" href="/export/json">Download JSON</a>
+        <a class="btn btn-sm btn-outline-primary" href="/export/pdf">Download PDF</a>
+      </div>
+
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Category</th>
+            <th>Priority</th>
+            <th>Status</th>
+            <th>Signatures</th>
+            <th>Student ID</th>
+            <th>Created</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for p in petitions %}
+          <tr>
+            <td>{{ p[0] }}</td>
+            <td>{{ p[1] }}</td>
+            <td>{{ p[3] }}</td>
+            <td>
+              <span class="badge {% if p[4] == 'High' %}bg-danger{% elif p[4] == 'Medium' %}bg-warning text-dark{% else %}bg-success{% endif %}">
+                {{ p[4] }}
+              </span>
+            </td>
+            <td>
+              <span class="badge {% if p[5] == 'Approved' %}bg-success{% elif p[5] == 'Rejected' %}bg-danger{% else %}bg-warning text-dark{% endif %}">
+                {{ p[5] }}
+              </span>
+            </td>
+            <td>
+              <span class="badge bg-info">{{ p[6] }}</span>
+            </td>
+            <td>{{ p[7] }}</td>
+            <td>{{ p[8]|string }}</td>
+            <td>
+              <a class="btn btn-sm btn-success" href="/update/{{p[0]}}/Approved">Approve</a>
+              <a class="btn btn-sm btn-danger" href="/update/{{p[0]}}/Rejected">Reject</a>
+            </td>
+          </tr>
+          {% else %}
+          <tr><td colspan="9">No petitions</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

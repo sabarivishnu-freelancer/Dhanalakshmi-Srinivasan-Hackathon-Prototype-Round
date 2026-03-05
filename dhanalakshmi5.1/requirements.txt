@@ -1,0 +1,6 @@
+flask
+psycopg2-binary
+reportlab
+werkzeug
+python-dotenv
+scikit-learn
